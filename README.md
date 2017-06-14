@@ -55,5 +55,5 @@ todo rm 1
 - Deadline keys and visual representation of tasks past their deadline
 - Call task by index
 - Add High Priority Indicator
-- List all tasks not completed
+- List all tasks that are incomplete
 - Chain removal of events e.f. todo remove 2 and 3 and 4 and 5
