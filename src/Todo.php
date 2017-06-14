@@ -18,8 +18,9 @@ class Todo
 		return json_decode(file_get_contents('./todo.json'), true);
 	} 
 
-	protected static function save($todos) {
+	protected static function save($todos, $show = false) {
 		file_put_contents('./todo.json', json_encode($todos));
+		if ($show) self::all();
 	} 
 
 	public static function all() {
@@ -87,8 +88,34 @@ class Todo
 			$todos[] = $data;
 		}
 
-		self::save($todos);
+		self::save($todos, true);
 	} 
+
+	public static function edit($i, $task) {
+
+		$c = new CLImate;
+		$todos = self::getTodos();
+
+		if (is_numeric($i)) {
+
+			if ((int) $i != $i) {
+				$offset = floor($i) - 1;
+				$index = intval(substr($i - $offset, 2) - 1);
+				$todos[$offset]['subtasks'][$index]['task'] = $task;
+			} else {
+				$todos[intval($i) - 1]['task'] = $task;
+			}
+
+			self::save($todos);
+			$c->black()->backgroundGreen()->out(' ✓ Task Updated ')->br();
+
+		} else {
+
+			$c->black()->backgroundRed(' No tasks index declared ');
+
+		}
+
+	}
 
 	public static function completed($i = null) {
 
@@ -99,7 +126,7 @@ class Todo
 			$offset = floor($i) - 1;
 			$index = intval(substr($i - $offset, 2) - 1);
 			$todos[$offset]['subtasks'][$index]['status'] = true;
-
+			$task = $todos[$offset]['subtasks'][$index]['task'];
 		} else {
 
 			// Check if has children
@@ -113,10 +140,12 @@ class Todo
 			}
 			
 			$todos[intval($i) - 1]['status'] = true;
+			$task = $todos[intval($i) - 1]['task'];
 		}
 
 		self::save($todos);
-		$c->comment('Task Completed')->br();
+		$c->black()->backgroundGreen()->out(' Task marked as complete ')->br();
+		$c->out(' <green>✓</green> ' . $i . '. ' . $task);
 
 	}
 
@@ -149,8 +178,7 @@ class Todo
 
 		$c = new CLImate;
 		$c->br()->green('Task removed!')->br();
-		self::save($todos);
-		self::all();
+		self::save($todos, true);
 	} 
 
 }

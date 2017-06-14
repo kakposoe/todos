@@ -33,6 +33,11 @@ if ( !$c->arguments->defined('help') &&
 				file_put_contents(__DIR__ . '/todo.json', []);
 				$c->black()->backgroundGreen()->out(' New To-do list created in directory! ');
 			}
+		} elseif ($argv[1] === 'edit') {
+
+			Todo::edit($argv[2], $argv[3]);
+			exit;
+
 		} elseif ($argv[1] === 'done') {
 
 			Todo::completed($argv[2]);
@@ -40,7 +45,7 @@ if ( !$c->arguments->defined('help') &&
 
 		} elseif (($argv[1] === 'remove') || ($argv[1] === 'rm')) {
 
-			Todo::remove($argv[2]);
+			!empty($argv[2]) ? Todo::remove($argv[2]) : Todo::remove();
 			exit;
 
 		} else {
@@ -54,8 +59,6 @@ if ( !$c->arguments->defined('help') &&
 		}
 
 	}
-
-	Todo::all();
 	
 }
 
@@ -103,7 +106,7 @@ if($c->arguments->defined('remove')) {
 // Delete All
 if($c->arguments->defined('flush')) {
 	file_put_contents('./todo.json', []);
-	$c->backgroundGreen(' All Tasks Deleted ');
+	$c->black()->backgroundGreen(' All Tasks Deleted ');
 }
 
 // Help
