@@ -1,0 +1,12 @@
+{
+	"name": "kakposoe/php-todos",
+	"keywords": ["todo", "productivity"],
+    "autoload": {
+        "psr-4": {
+            "Todo\\": "src/"
+		}
+	},
+    "require": {
+        "league/climate": "^3.2"
+    }
+}
