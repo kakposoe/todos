@@ -11,5 +11,5 @@
     "require": {
         "league/climate": "^3.2"
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev-master"
 }
