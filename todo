@@ -9,7 +9,6 @@ use Todo\Todo;
 $c = new League\CLImate\CLImate;
 
 // Intro Text
-$c->br()->black()->backgroundCyan()->out(' To Do List! ')->br();
 
 $c->arguments->add( require_once(__DIR__ . '/arguments.php') );
 $c->arguments->parse();
@@ -57,7 +56,7 @@ if ( !$c->arguments->defined('help') &&
 
 			if($c->arguments->defined('subtask')) {
 				Todo::add($argv[1], $c->arguments->get('subtask'));
-			} elseif($argv[2] === 'and') {
+			} elseif(isset($argv[2]) && $argv[2] === 'and') {
 				Todo::addMany($argv);
 			} else {
 				Todo::add($argv[1]);

@@ -14,4 +14,5 @@ A quick way of noting down your to do's on your current project.
 - Call task by index
 - Add High Priority Indicator
 - List all tasks not completed
+- Chain removal of events e.f. todo remove 2 and 3 and 4 and 5
 

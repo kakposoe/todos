@@ -63,6 +63,8 @@ class Todo
 		$c = new CLImate;
 		$todos = self::getTodos();
 
+		$c->br()->black()->backgroundCyan()->out(' To Do List! ')->br();
+
 		if ($todos) {
 			$count = 1;
 			foreach ($todos as $todo) {
@@ -129,12 +131,33 @@ class Todo
 
 	public static function addMany($tasks) {
 
+		$c = new CLImate;
 		array_shift($tasks);
+
+		$first = false;
+		$lister = [];
 
 		foreach ($tasks as $key => $value) {
 			if ($value !== 'and') {
 				self::add($value);
+				$lister[] = $value;
 			}
+
+			if(!$first) {
+				$todos = self::getTodos();
+				end($todos);
+				$ref = key($todos) + 1;
+				$first = true;
+			}
+		}
+
+		$msg = ' ✓ ' . count($lister) . ' New Tasks Added ';
+
+		$c->br()->black()->backgroundGreen()->out($msg)->br();
+
+		foreach ($lister as $task) {
+			$c->out('- ' . $ref . '. ' .  $task);
+			$ref++;
 		}
 
 	} 
