@@ -6,6 +6,8 @@
             "Todo\\": "src/"
 		}
 	},
+	"homepage": "https://github.com/kakposoe/todos",
+	"license": "MIT",
     "require": {
         "league/climate": "^3.2"
     },
