@@ -52,12 +52,16 @@ if ( !$c->arguments->defined('help') &&
 
 			if($c->arguments->defined('subtask')) {
 				Todo::add($argv[1], $c->arguments->get('subtask'));
+			} elseif($argv[2] === 'and') {
+				Todo::addMany($argv);
 			} else {
 				Todo::add($argv[1]);
 			}
 
 		}
 
+	} else {
+		Todo::all();
 	}
 	
 }

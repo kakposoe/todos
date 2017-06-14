@@ -88,7 +88,19 @@ class Todo
 			$todos[] = $data;
 		}
 
-		self::save($todos, true);
+		self::save($todos);
+	} 
+
+	public static function addMany($tasks) {
+
+		array_shift($tasks);
+
+		foreach ($tasks as $key => $value) {
+			if ($value !== 'and') {
+				self::add($value);
+			}
+		}
+
 	} 
 
 	public static function edit($i, $task) {
