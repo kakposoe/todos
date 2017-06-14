@@ -1,19 +1,48 @@
-# To Do Command Line App
+# To Do Command Line App [Not Ready Yet]
 
 A quick way of noting down your to do's on your current project.
 
-## Well, is it a normal todo list?
+## Wait, is this a normal todo list?
 Pretty much. Only difference is its completely on the command line. 
 
 ## How does it work?
-running <code>todo init</code> will create a todo.json file in the folder you are currently in. Then use the app to create new todo tasks.
+Simply running ```todo init``` will create a todo.json file in the folder you are current working directory. You can then use the app to create new todo tasks like so:
+```bash
+todo 'This is my new task'
+```
 
-You can even create sub tasks.
-<code>todo 'This is a subtask' -s 2</code>
+# You can add multiple tasks at once
+Just simply add 'and' after each todo  
+```bash
+todo 'This' and 'That' and 'This'
+```
 
-#I don't want to add them one by one
-Just simply add 'and' after each todo
-<code>todo 'This' and 'That' and 'This'</code>
+You can even create sub tasks.  
+```bash
+todo 'This is a subtask' -s 2
+```
+
+
+# How do I mark a task down as completed
+```bash
+todo done 1
+todo done 1.2
+todo -d 1.2
+```
+
+# Editing a task
+```bash
+todo edit 1 'This is an edit to the task'
+```
+
+# Deleting a task
+Use either one of the following commands
+```bash
+todo remove 1
+todo delete 1
+todo -r 1
+todo rm 1
+```
 
 ### Things to work on
 - Check if indexes are numeric
@@ -28,4 +57,3 @@ Just simply add 'and' after each todo
 - Add High Priority Indicator
 - List all tasks not completed
 - Chain removal of events e.f. todo remove 2 and 3 and 4 and 5
-

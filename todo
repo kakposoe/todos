@@ -29,11 +29,11 @@ if ( !$c->arguments->defined('help') &&
 
 		} elseif ($argv[1] === 'init') { // If init called, create file
 			
-			if (file_exists(__DIR__ . '/todo.json')) {
+			if (file_exists(getcwd() . '/todo.json')) {
 				$c->black()->backgroundRed()->out(' To-do list already in project ');
 				exit;
 			} else {
-				file_put_contents(__DIR__ . '/todo.json', []);
+				file_put_contents(getcwd() . '/todo.json', []);
 				$c->black()->backgroundGreen()->out(' New To-do list created in directory! ');
 				exit;
 			}

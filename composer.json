@@ -1,5 +1,5 @@
 {
-	"name": "kakposoe/php-todos",
+	"name": "kakposoe/todos",
 	"keywords": ["todo", "productivity"],
     "autoload": {
         "psr-4": {
