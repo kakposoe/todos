@@ -11,7 +11,7 @@ $c = new League\CLImate\CLImate;
 // Intro Text
 $c->br()->black()->backgroundCyan()->out(' To Do List! ')->br();
 
-$c->arguments->add(require_once(__DIR__ . '/arguments.php'));
+$c->arguments->add( require_once(__DIR__ . '/arguments.php') );
 $c->arguments->parse();
 
 if ( !$c->arguments->defined('help') && 
@@ -22,9 +22,13 @@ if ( !$c->arguments->defined('help') &&
 	!$c->arguments->defined('undo') ) 
 {
 
-	if (count($argv) > 1) { // If more than one argument
+	if (count($argv) > 1) { // If has any arguements
 
-		if ($argv[1] === 'init') { // If init called, create file
+		if (is_numeric($argv[1])) { // If init called, create file
+			Todo::find($argv[1]);
+			exit;
+
+		} elseif ($argv[1] === 'init') { // If init called, create file
 			
 			if (file_exists(__DIR__ . '/todo.json')) {
 				$c->black()->backgroundRed()->out(' To-do list already in project ');
@@ -32,6 +36,7 @@ if ( !$c->arguments->defined('help') &&
 			} else {
 				file_put_contents(__DIR__ . '/todo.json', []);
 				$c->black()->backgroundGreen()->out(' New To-do list created in directory! ');
+				exit;
 			}
 		} elseif ($argv[1] === 'edit') {
 
@@ -106,11 +111,15 @@ if($c->arguments->defined('remove')) {
 	Todo::remove($c->arguments->get('remove'));
 }
 
-
 // Delete All
 if($c->arguments->defined('flush')) {
-	file_put_contents('./todo.json', []);
-	$c->black()->backgroundGreen(' All Tasks Deleted ');
+
+	$input = $c->black()->backgroundRed()->confirm(' Are you sure you want to delete all ');
+
+	if ($input->confirmed()) {
+		file_put_contents('./todo.json', []);
+		$c->black()->backgroundGreen(' All Tasks Deleted ');
+	}
 }
 
 // Help

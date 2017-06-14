@@ -23,6 +23,41 @@ class Todo
 		if ($show) self::all();
 	} 
 
+	public static function find($i) {
+		$c = new CLImate;
+		$todos = self::getTodos();
+		$output = '';
+
+		if ((int) $i != $i) {
+
+			$offset = floor($i) - 1;
+			$index = intval(substr($i - $offset, 2) - 1);
+			$todos[$offset]['subtasks'][$index]['status'] ? $output .= '<green>✓</green> ' : $output .= '- ';
+			$output .= $i . '. ';
+			$todos[intval($i) - 1]['status'] ? $output .= '<dim>' . $todos[$offset]['subtasks'][$index]['task'] . '</dim>' : $output .= $todos[intval($i) - 1]['task']; 
+			$c->out($output);
+
+		} else {
+
+			$todos[intval($i) - 1]['status'] ? $output .= '<green>✓</green> ' : $output .= '- ';
+			$output .= $i . '. ';
+			$todos[intval($i) - 1]['status'] ? $output .= '<dim>' . $todos[intval($i) - 1]['task'] . '</dim>' : $output .= $todos[intval($i) - 1]['task']; 
+			$c->out($output);
+
+			if (isset($todos[intval($i) - 1]['subtasks'])) {
+				$output = '';
+				foreach ($todos[intval($i) - 1]['subtasks'] as $key => $sub) {
+					$sub['status'] ? $output .= '<green>✓</green> ' : $output .= '- ';
+					$output .= ($key + 1) . '. ';
+					$sub['status'] ? $output .= '<dim>' . $sub['task'] . '</dim>' : $output .= $sub['task']; 
+					$c->tab()->out($output);
+					$output = '';
+				}
+			}
+		}
+
+	}
+
 	public static function all() {
 
 		$c = new CLImate;
@@ -67,7 +102,56 @@ class Todo
 				$count++;
 			}
 		} else {
-			$c->backgroundRed(' Oops, There are no tasks ');
+			$c->green(' ✓ All Tasks Completed. ');
+			$c->out(' Why not add a few tasks... ');
+		}
+	}
+	public static function all() {
+
+		$c = new CLImate;
+		$todos = self::getTodos();
+
+		if ($todos) {
+			$count = 1;
+			foreach ($todos as $todo) {
+
+
+				if (isset($todo['subtasks']) && count($todo['subtasks']) > 0) {
+					$completeCount = 0;
+					foreach ($todo['subtasks'] as $sub) {
+						if ($sub['status'] == true) $completeCount++;
+					}
+				}
+
+				$todo['status'] ? $status = '<green>✓</green>' : $status = '-';
+				$output = $status . ' ' . $count . '. ';
+				$todo['status'] ? $output .= '<dim>' . $todo['task'] . '</dim>' : $output .= $todo['task']; 
+
+				if (isset($todo['subtasks']) && count($todo['subtasks']) > 0) {
+					$output .= ' [' . $completeCount . '/' . count($todo['subtasks']) . ']';
+				}
+
+				$c->out($output);
+
+				if (isset($todo['subtasks'])) {
+					$subCount = 1;
+					foreach ($todo['subtasks'] as $sub) {
+						$sub['status'] == true ? $status = '<green>✓</green>' : $status = '-';
+
+						// Output
+						$subout = $status . ' ' . $count . '.' . $subCount . '. ';
+						$sub['status'] ? $subout .= '<dim>' . $sub['task'] . '</dim>' : $subout .= $sub['task']; 
+
+						$c->tab()->out($subout);
+						$subCount++;
+					}
+				}
+
+				$count++;
+			}
+		} else {
+			$c->green(' ✓ All Tasks Completed. ');
+			$c->out(' Why not add a few tasks... ');
 		}
 	}
 
