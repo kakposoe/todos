@@ -11,5 +11,8 @@
     "require": {
         "league/climate": "^3.2"
     },
+	"bin": [
+		"todo"
+	],
     "minimum-stability": "dev-master"
 }
