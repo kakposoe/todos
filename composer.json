@@ -8,6 +8,6 @@
 	},
     "require": {
         "league/climate": "^3.2"
-    }
+    },
     "minimum-stability": "stable"
 }
