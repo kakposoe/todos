@@ -90,15 +90,50 @@ class Todo
 		self::save($todos);
 	} 
 
+	public static function completed($i = null) {
+
+		$todos = self::getTodos();
+		$c = new CLImate;
+
+		if ((int) $i != $i ) {
+			$offset = floor($i) - 1;
+			$index = intval(substr($i - $offset, 2) - 1);
+			$todos[$offset]['subtasks'][$index]['status'] = true;
+
+		} else {
+
+			// Check if has children
+			if(array_key_exists('subtasks', $todos[$i - 1])) {
+				$input = $c->black()->backgroundRed()->confirm(' There are sub tasks, mark all as completed? ');
+				if ($input->confirmed()) {
+					foreach ($todos[$i - 1]['subtasks'] as &$sub) {
+						$sub['status'] = true;
+					}
+				} 
+			}
+			
+			$todos[intval($i) - 1]['status'] = true;
+		}
+
+		self::save($todos);
+		$c->comment('Task Completed')->br();
+
+	}
+
 	public static function remove($i = null) {
 
+		$c = new CLImate;
 		$todos = self::getTodos();
 
 		if($i) {
 			if ((int) $i != $i ) {
 				$offset = floor($i) - 1;
 				$index = substr($i - $offset, 2) - 1;
-				array_splice($todos[$offset]['subtasks'], $index, 1);
+				$input = $c->black()->backgroundRed()->confirm(' Confirm to Delete ');
+				if ($input->confirmed()) {
+					array_splice($todos[$offset]['subtasks'], $index, 1);
+				}
+
 			} else {
 				array_splice($todos, intval($i) - 1, 1);
 			}

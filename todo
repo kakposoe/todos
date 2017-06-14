@@ -2,59 +2,16 @@
 <?php 
 
 require './vendor/autoload.php';
-
-$todos = json_decode(file_get_contents('./todo.json'), true);
-
 use Todo\Todo;
+
+/* $todos = json_decode(file_get_contents('./todo.json'), true); */
 
 $c = new League\CLImate\CLImate;
 
-
 // Intro Text
-$c->br();
-$c->black()->backgroundCyan()->out(' To Do List! ');
+$c->br()->black()->backgroundCyan()->out(' To Do List! ')->br();
 
-$c->arguments->add([
-    'new' => [
-        'prefix'       => 'n',
-        'longPrefix'   => 'new',
-        'description'  => 'Add a top level task',
-    ],
-
-    'subtask' => [
-        'prefix'       => 's',
-        'longPrefix'   => 'subtask',
-        'description'  => 'Add new tasks as subtask to parent tasks',
-    ],
-
-    'done' => [
-        'prefix'       => 'd',
-        'longPrefix'  => 'done',
-        'description'  => 'Mark a task as done. Reference a task Number',
-		'castTo' => 'float',
-    ],
-    'undo' => [
-        'prefix'       => 'u',
-        'longPrefix'  => 'undo',
-        'description'  => 'Revert a complete tasks back to uncompleted status',
-    ],
-    'remove' => [
-        'prefix'       => 'r',
-        'longPrefix'  => 'remove',
-        'description'  => 'Remove a task for your todo list',
-    ],
-    'flush' => [
-        'longPrefix'  => 'delete-all',
-        'description'  => 'Delete All Entries',
-		'noValue' => true,
-    ],
-	'help' => [
-        'longPrefix'  => 'help',
-        'description' => 'Prints a usage statement',
-        'noValue'     => true,
-    ],
-]);
-
+$c->arguments->add(require_once(__DIR__ . '/arguments.php'));
 $c->arguments->parse();
 
 if ( !$c->arguments->defined('help') && 
@@ -65,25 +22,37 @@ if ( !$c->arguments->defined('help') &&
 	!$c->arguments->defined('undo') ) 
 {
 
-	$c->br();
+	if (count($argv) > 1) { // If more than one argument
 
-	// 'init' - Create new file
-	if (count($argv) > 1 && $argv[1] === 'init') {
-		if (file_exists(__DIR__ . '/todo.json')) {
-			$c->black()->backgroundRed()->out(' To-do list already in project ');
-		} else {
-			file_put_contents(__DIR__ . '/todo.json', []);
-			$c->black()->backgroundGreen()->out(' New To-do list created in directory! ');
-		}
-		return true;
-	}
+		if ($argv[1] === 'init') { // If init called, create file
+			
+			if (file_exists(__DIR__ . '/todo.json')) {
+				$c->black()->backgroundRed()->out(' To-do list already in project ');
+				exit;
+			} else {
+				file_put_contents(__DIR__ . '/todo.json', []);
+				$c->black()->backgroundGreen()->out(' New To-do list created in directory! ');
+			}
+		} elseif ($argv[1] === 'done') {
 
-	if(count($argv) > 1) {
-		if($c->arguments->defined('subtask')) {
-			Todo::add($argv[1], $c->arguments->get('subtask'));
+			Todo::completed($argv[2]);
+			exit;
+
+		} elseif (($argv[1] === 'remove') || ($argv[1] === 'rm')) {
+
+			Todo::remove($argv[2]);
+			exit;
+
 		} else {
-			Todo::add($argv[1]);
+
+			if($c->arguments->defined('subtask')) {
+				Todo::add($argv[1], $c->arguments->get('subtask'));
+			} else {
+				Todo::add($argv[1]);
+			}
+
 		}
+
 	}
 
 	Todo::all();
@@ -122,35 +91,7 @@ if($c->arguments->defined('undo')) {
 
 // Change status to done
 if($c->arguments->defined('done')) {
-
-	$i = $c->arguments->get('done');
-
-	if ((int) $i != $i ) {
-
-		$offset = floor($i) - 1;
-		$index = intval(substr($i - $offset, 2) - 1);
-		$todos[$offset]['subtasks'][$index]['status'] = true;
-
-	} else {
-
-		// Check if has children
-		if(array_key_exists('subtasks', $todos[$i - 1])) {
-			$input = $c->black()->backgroundRed()->confirm(' There are sub tasks, mark all as completed? ');
-			if ($input->confirmed()) {
-				foreach ($todos[$i - 1]['subtasks'] as &$sub) {
-					$sub['status'] = true;
-				}
-			} 
-		}
-		
-		$todos[intval($i) - 1]['status'] = true;
-	}
-
-	file_put_contents('./todo.json', json_encode($todos));
-	$c->comment('Task Completed');
-	$c->br();
-	tasks($todos, $c);
-
+	Todo::completed($c->arguments->get('done'));
 }
 
 // Remove
