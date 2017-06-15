@@ -111,6 +111,8 @@ class Todo
 
 	public static function add($task, $subtask = null) {
 
+		$c = new CLImate;
+
 		$todos = self::getTodos();
 
 		$data = [
