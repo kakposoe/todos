@@ -124,9 +124,10 @@ class Todo
 			$index = intval($subtask); 
 			$index--;
 			$todos[$index]['subtasks'][] = $data;
-			$c->black()->backgroundGreen()->out(' New Subtask Added ');
+			$c->black()->backgroundGreen()->out(' ✓ New Subtask Added ');
 		} else {
 			$todos[] = $data;
+			$c->black()->backgroundGreen()->out(' ✓ New Task Added ');
 		}
 
 		self::save($todos);

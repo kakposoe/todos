@@ -2,6 +2,8 @@
 
 A quick way of noting down your to do's on your current project.
 
+![Todo App](example.png)
+
 ## Wait, is this a normal todo list?
 Pretty much. Only difference is its completely on the command line. 
 
