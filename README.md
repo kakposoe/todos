@@ -8,7 +8,7 @@ A quick way of noting down your to do's on your current project.
 Pretty much. Only difference is its completely on the command line. 
 
 ## How does it work?
-Simply running ```todo init``` will create a todo.json file in the folder you are current working directory. You can then use the app to create new todo tasks like so:
+Simply running ```todo init``` will create a todo.json file in your current working directory. You can then use the app to create new todo tasks like so:
 ```bash
 todo 'This is my new task'
 ```
@@ -24,6 +24,16 @@ You can even create sub tasks.
 todo 'This is a subtask' -s 2
 ```
 
+### Viewing your todo list
+Just type:
+```bash
+todo
+```
+
+You can also view a task by its index
+```bash
+todo 1
+```
 
 ### How do I mark a task down as completed
 ```bash
@@ -45,6 +55,12 @@ todo delete 1
 todo -r 1
 todo rm 1
 ```
+
+Your can delete all your todos with the following command 
+```bash
+todo --delete-all
+```
+**Note:** You will need to confirm your would like to wipe your todo list
 
 ## Installation
 via composer:
@@ -69,12 +85,12 @@ ___
 - Check functions to see if check if exists ??
 - Check whether or not all sub tasks have been completed when marking subtask as complete, and auto update top level task to completed
 - Have a user confirm if they would like to remove task with sub tasks, if deleting parent level task with subtasks
-- Convert sublevel tasks to top level tasks
+- Method to convert sublevel tasks to top level tasks
 - Add 'No More tasks' if all task have been removed
+- Message if there is no todo at index if <code>todo 1</code> does not exist
 - Multilevel child tasks
 - Deadline keys and visual representation of tasks past their deadline
-- Call task by index
 - Add High Priority Indicator
 - List all tasks that are incomplete
-- Chain removal of events e.f. todo remove 2 and 3 and 4 and 5
+- Chain removal of events e.g. <code>todo remove 2 and 3 and 4 and 5</code>
 - Complete tasks using menu select
