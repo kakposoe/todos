@@ -12,6 +12,6 @@
         "league/climate": "^3.2"
     },
     "bin": [
-        "todok"
-    ],
+        "todo"
+    ]
 }
