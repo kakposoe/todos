@@ -45,7 +45,7 @@ if ( !$c->arguments->defined('help') &&
 
 		} elseif ($argv[1] === 'done') {
 
-			Todo::completed($argv[2]);
+			!empty($argv[2]) ? Todo::completed($argv[2]) : Todo::selectComplete();
 			exit;
 
 		} elseif (($argv[1] === 'remove') || ($argv[1] === 'rm')) {

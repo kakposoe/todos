@@ -220,6 +220,13 @@ class Todo
 
 	}
 
+	public static function selectComplete($i = null) {
+
+		$c = new CLImate;
+		$c->black()->backgroundRed()->out(' Opps! You have not added an index to mark as completed ');
+		$c->comment(' e.g. todo done 1.1 ');
+	}
+
 	public static function remove($i = null) {
 
 		$c = new CLImate;

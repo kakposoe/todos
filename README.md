@@ -57,3 +57,4 @@ todo rm 1
 - Add High Priority Indicator
 - List all tasks that are incomplete
 - Chain removal of events e.f. todo remove 2 and 3 and 4 and 5
+- Complete tasks using menu select
