@@ -27,11 +27,6 @@ if ( !$c->arguments->defined('help') &&
 			Todo::find($argv[1]);
 			exit;
 
-		} elseif (!$argv[1] && !file_exists(getcwd() . '/todo.json')) { // If init called, create file
-
-				$c->black()->backgroundRed()->out(' Oops! You haven\'t started a to do list ');
-				$c->comment(' Type \'todo init \' to begin... ');
-				exit;
 
 		} elseif ($argv[1] === 'init') { // If init called, create file
 			
@@ -71,9 +66,17 @@ if ( !$c->arguments->defined('help') &&
 		}
 
 	} else {
-		Todo::all();
+		if (file_exists(getcwd() . '/todo.json')) { 
+			Todo::all();
+		} else {
+			$c->black()->backgroundRed()->out(' Oops! You haven\'t started a to do list ');
+			$c->comment(' Type \'todo init \' to begin... ');
+			exit;
+		}
 	}
 	
+} else {
+
 }
 
 // Add New Task
