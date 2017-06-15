@@ -11,7 +11,7 @@ Simply running ```todo init``` will create a todo.json file in the folder you ar
 todo 'This is my new task'
 ```
 
-# You can add multiple tasks at once
+### You can add multiple tasks at once
 Just simply add 'and' after each todo  
 ```bash
 todo 'This' and 'That' and 'This'
@@ -23,19 +23,19 @@ todo 'This is a subtask' -s 2
 ```
 
 
-# How do I mark a task down as completed
+### How do I mark a task down as completed
 ```bash
 todo done 1
 todo done 1.2
 todo -d 1.2
 ```
 
-# Editing a task
+### Editing a task
 ```bash
 todo edit 1 'This is an edit to the task'
 ```
 
-# Deleting a task
+### Deleting a task
 Use either one of the following commands
 ```bash
 todo remove 1
@@ -44,7 +44,25 @@ todo -r 1
 todo rm 1
 ```
 
-### Things to work on
+## Installation
+via composer:
+```bash
+composer global require kakposoe/todos
+```
+
+manual installation
+```bash
+git clone http://github.com/kakposoe/todos 
+```
+
+You would then called todo using:
+```bash
+./todo 'This is an example task'
+```
+
+___
+
+## Things to work on
 - Check if indexes are numeric
 - Check functions to see if check if exists ??
 - Check whether or not all sub tasks have been completed when marking subtask as complete, and auto update top level task to completed
