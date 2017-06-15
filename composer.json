@@ -1,18 +1,17 @@
 {
-	"name": "kakposoe/todos",
-	"keywords": ["todo", "productivity"],
+    "name": "kakposoe/todos",
+    "description": "Command Line todo list app",
+    "keywords": ["todo", "productivity", "cmdline"],
+    "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Todo\\": "src/"
-		}
-	},
-	"homepage": "https://github.com/kakposoe/todos",
-	"license": "MIT",
+            "Todo\\": "src"
+        },
+    },
     "require": {
         "league/climate": "^3.2"
     },
-	"bin": [
-		"todo"
-	],
-    "minimum-stability": "dev-master"
+    "bin": [
+        "todok"
+    ],
 }
