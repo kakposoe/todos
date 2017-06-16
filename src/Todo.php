@@ -10,10 +10,6 @@ class Todo
 	public function __construct() {
 	}
 
-	public static function init() {
-
-	}
-
 	protected static function getTodos() {
 		return json_decode(file_get_contents('./todo.json'), true);
 	} 

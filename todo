@@ -4,8 +4,6 @@
 require __DIR__ . '/vendor/autoload.php';
 use Todo\Todo;
 
-/* $todos = json_decode(file_get_contents('./todo.json'), true); */
-
 $c = new League\CLImate\CLImate;
 
 // Intro Text
