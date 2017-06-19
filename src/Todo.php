@@ -94,15 +94,18 @@ class Todo
 					$subCount = 1;
 					foreach ($todo['subtasks'] as $sub) {
 
-						if($sub['status']) {
+						if($sub['status'] == true) {
 							$status = '<green>✓</green>';
-							$count = '<dim>' . $count . '</dim>';
+							$numb = '<dim>' . $count . '.</dim>';
+							$subNumb = '<dim>' . $subCount . '.</dim>';
 						} else {
 							$status = '-';
+							$numb = $count . '.';
+							$subNumb = $subCount . '.';
 						}
 
 						// Output
-						$subout = $status . ' ' . $count . '.' . $subCount . '. ';
+						$subout = $status . ' ' . $numb . $subNumb . ' ';
 						$sub['status'] ? $subout .= '<dim>' . $sub['task'] . '</dim>' : $subout .= $sub['task']; 
 
 						$c->tab()->out($subout);
