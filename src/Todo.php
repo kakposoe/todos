@@ -75,12 +75,13 @@ class Todo
 
 				if($todo['status']) {
 					$status = '<green>✓</green>';
-					$count = '<dim>' . $count . '</dim>';
+					$numb = '<dim>' . $count . '.</dim> ';
 				} else {
 					$status = '-';
+					$numb = $count . '. ';
 				}
 
-				$output = $status . ' ' . $count;
+				$output = $status . ' ' . $numb;
 				$todo['status'] ? $output .= '<dim>' . $todo['task'] . '</dim>' : $output .= $todo['task']; 
 
 				if (isset($todo['subtasks']) && count($todo['subtasks']) > 0) {
@@ -226,7 +227,7 @@ class Todo
 				} 
 			}
 
-			$number = $offset . '.' . $index;
+			$number = ($offset + 1) . '.' . ($index + 1);
 			$task = $todos[$offset]['subtasks'][$index]['task'];
 
 
