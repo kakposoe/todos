@@ -13,25 +13,25 @@
 		],
 
 		'done' => [
-			'prefix'       => 'd',
+			'prefix'      => 'd',
 			'longPrefix'  => 'done',
-			'description'  => 'Mark a task as done. Reference a task Number',
-			'castTo' => 'float',
+			'description' => 'Mark a task as done. Reference a task Number',
+			'castTo'      => 'float',
 		],
 		'undo' => [
-			'prefix'       => 'u',
+			'prefix'      => 'u',
 			'longPrefix'  => 'undo',
-			'description'  => 'Revert a complete tasks back to uncompleted status',
+			'description' => 'Revert a complete tasks back to uncompleted status',
 		],
 		'remove' => [
-			'prefix'       => 'r',
+			'prefix'      => 'r',
 			'longPrefix'  => 'remove',
-			'description'  => 'Remove a task for your todo list',
+			'description' => 'Remove a task for your todo list',
 		],
 		'flush' => [
 			'longPrefix'  => 'delete-all',
-			'description'  => 'Delete All Entries',
-			'noValue' => true,
+			'description' => 'Delete All Entries',
+			'noValue'     => true,
 		],
 		'help' => [
 			'longPrefix'  => 'help',

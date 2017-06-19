@@ -75,10 +75,10 @@ class Todo
 
 				if($todo['status']) {
 					$status = '<green>✓</green>';
-					$numb = '<dim>' . $count . '.</dim> ';
+					$numb   = '<dim>' . $count . '.</dim> ';
 				} else {
 					$status = '-';
-					$numb = $count . '. ';
+					$numb   = $count . '. ';
 				}
 
 				$output = $status . ' ' . $numb;
@@ -95,12 +95,12 @@ class Todo
 					foreach ($todo['subtasks'] as $sub) {
 
 						if($sub['status'] == true) {
-							$status = '<green>✓</green>';
-							$numb = '<dim>' . $count . '.</dim>';
+							$status  = '<green>✓</green>';
+							$numb    = '<dim>' . $count . '.</dim>';
 							$subNumb = '<dim>' . $subCount . '.</dim>';
 						} else {
-							$status = '-';
-							$numb = $count . '.';
+							$status  = '-';
+							$numb    = $count . '.';
 							$subNumb = $subCount . '.';
 						}
 
@@ -187,7 +187,7 @@ class Todo
 
 			if ((int) $i != $i) {
 				$offset = floor($i) - 1;
-				$index = intval(substr($i - $offset, 2) - 1);
+				$index  = intval(substr($i - $offset, 2) - 1);
 				$todos[$offset]['subtasks'][$index]['task'] = $task;
 			} else {
 				$todos[intval($i) - 1]['task'] = $task;
@@ -211,12 +211,12 @@ class Todo
 
 		if ((int) $i != $i) {
 			$offset = floor($i) - 1;
-			$index = intval(substr($i - $offset, 2) - 1);
+			$index  = intval(substr($i - $offset, 2) - 1);
 			$todos[$offset]['subtasks'][$index]['status'] = true;
 
 			// Check if all sibling tasks marked as complete
 
-			$subDoneCount = count($todos[$offset]['subtasks']);
+			$subDoneCount  = count($todos[$offset]['subtasks']);
 			$completeCount = 0;
 
 			for ($i = 0; $i < count($todos[$offset]['subtasks']); $i++) {
@@ -247,7 +247,7 @@ class Todo
 			}
 			
 			$todos[intval($i) - 1]['status'] = true;
-			$task = $todos[intval($i) - 1]['task'];
+			$task   = $todos[intval($i) - 1]['task'];
 			$number = intval($i);
 
 		}
@@ -274,8 +274,8 @@ class Todo
 		if($i) {
 			if ((int) $i != $i ) {
 				$offset = floor($i) - 1;
-				$index = substr($i - $offset, 2) - 1;
-				$input = $c->black()->backgroundRed()->confirm(' Confirm to Delete ');
+				$index  = substr($i - $offset, 2) - 1;
+				$input  = $c->black()->backgroundRed()->confirm(' Confirm to Delete ');
 				if ($input->confirmed()) {
 					array_splice($todos[$offset]['subtasks'], $index, 1);
 				}
