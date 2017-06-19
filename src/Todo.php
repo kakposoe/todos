@@ -20,6 +20,7 @@ class Todo
 	} 
 
 	public static function find($i) {
+
 		$c = new CLImate;
 		$todos = self::getTodos();
 		$output = '';
@@ -65,7 +66,6 @@ class Todo
 			$count = 1;
 			foreach ($todos as $todo) {
 
-
 				if (isset($todo['subtasks']) && count($todo['subtasks']) > 0) {
 					$completeCount = 0;
 					foreach ($todo['subtasks'] as $sub) {
@@ -73,8 +73,14 @@ class Todo
 					}
 				}
 
-				$todo['status'] ? $status = '<green>✓</green>' : $status = '-';
-				$output = $status . ' ' . $count . '. ';
+				if($todo['status']) {
+					$status = '<green>✓</green>';
+					$count = '<dim>' . $count . '</dim>';
+				} else {
+					$status = '-';
+				}
+
+				$output = $status . ' ' . $count;
 				$todo['status'] ? $output .= '<dim>' . $todo['task'] . '</dim>' : $output .= $todo['task']; 
 
 				if (isset($todo['subtasks']) && count($todo['subtasks']) > 0) {
@@ -86,7 +92,13 @@ class Todo
 				if (isset($todo['subtasks'])) {
 					$subCount = 1;
 					foreach ($todo['subtasks'] as $sub) {
-						$sub['status'] == true ? $status = '<green>✓</green>' : $status = '-';
+
+						if($sub['status']) {
+							$status = '<green>✓</green>';
+							$count = '<dim>' . $count . '</dim>';
+						} else {
+							$status = '-';
+						}
 
 						// Output
 						$subout = $status . ' ' . $count . '.' . $subCount . '. ';
@@ -193,11 +205,31 @@ class Todo
 		$todos = self::getTodos();
 		$c = new CLImate;
 
-		if ((int) $i != $i ) {
+		if ((int) $i != $i) {
 			$offset = floor($i) - 1;
 			$index = intval(substr($i - $offset, 2) - 1);
 			$todos[$offset]['subtasks'][$index]['status'] = true;
+
+			// Check if all sibling tasks marked as complete
+
+			$subDoneCount = count($todos[$offset]['subtasks']);
+			$completeCount = 0;
+
+			for ($i = 0; $i < count($todos[$offset]['subtasks']); $i++) {
+				if ($todos[$offset]['subtasks'][$i]['status']) $completeCount++;
+			}
+
+			if ($subDoneCount === $completeCount) {
+				$input = $c->black()->backgroundGreen()->confirm(' All Sub Tasks completed! Would you like to mark main task as completed? ');
+				if ($input->confirmed()) {
+					$todos[$offset]['status'] = true;
+				} 
+			}
+
+			$number = $offset . '.' . $index;
 			$task = $todos[$offset]['subtasks'][$index]['task'];
+
+
 		} else {
 
 			// Check if has children
@@ -212,11 +244,14 @@ class Todo
 			
 			$todos[intval($i) - 1]['status'] = true;
 			$task = $todos[intval($i) - 1]['task'];
+			$number = intval($i);
+
 		}
 
 		self::save($todos);
 		$c->black()->backgroundGreen()->out(' Task marked as complete ')->br();
-		$c->out(' <green>✓</green> ' . $i . '. ' . $task);
+
+		$c->out(' <green>✓</green> ' . $number . '. ' . $task);
 
 	}
 
