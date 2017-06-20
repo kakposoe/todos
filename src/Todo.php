@@ -29,12 +29,33 @@ class Todo
 
 			$offset = floor($i) - 1;
 			$index = intval(substr($i - $offset, 2) - 1);
+
+			if (array_key_exists($index, $todos)) {
+				if (array_key_exists('subtasks', $todos[$index])) {
+					if(!array_key_exists(intval($offset), $todos[$index]['subtasks'])) {
+						$c->black()->backgroundRed()->out(' Oops! There is no task as this index ');
+						exit;
+					}
+				} else {
+					$c->black()->backgroundRed()->out(' Oops! There are no subtasks for #' . ($index + 1) . ' ');
+					exit;
+				}
+			} else {
+				$c->black()->backgroundRed()->out(' Oops! There is no top level task... ');
+				exit;
+			}
+
 			$todos[$offset]['subtasks'][$index]['status'] ? $output .= '<green>✓</green> ' : $output .= '- ';
 			$output .= $i . '. ';
 			$todos[intval($i) - 1]['status'] ? $output .= '<dim>' . $todos[$offset]['subtasks'][$index]['task'] . '</dim>' : $output .= $todos[intval($i) - 1]['task']; 
 			$c->out($output);
 
 		} else {
+
+			if(!array_key_exists(intval($i) - 1, $todos)) {
+				$c->black()->backgroundRed()->out(' Oops! There is no task as this index ');
+				exit;
+			}
 
 			$todos[intval($i) - 1]['status'] ? $output .= '<green>✓</green> ' : $output .= '- ';
 			$output .= $i . '. ';

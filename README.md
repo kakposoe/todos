@@ -83,10 +83,8 @@ ___
 ## Things to work on
 - Check if indexes are numeric
 - Check functions to see if check if exists ??
-- Have a user confirm if they would like to remove task with sub tasks, if deleting parent level task with subtasks
 - Method to convert sublevel tasks to top level tasks
-- Add 'No More tasks' if all task have been removed
-- Message if there is no todo at index if <code>todo 1</code> does not exist
+- Add 'No More tasks' if all task have been completed
 - Multilevel child tasks
 - Deadline keys and visual representation of tasks past their deadline
 - Add High Priority Indicator
