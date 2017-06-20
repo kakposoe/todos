@@ -273,6 +273,11 @@ class Todo
 	public static function remove($i = null) {
 		$todos = self::getTodos();
 
+		if (count($todos) == 0) {
+			Message::error('There are no tasks!');
+			exit;
+		}
+
 		if($i) {
 			if ((int) $i != $i ) {
 				$offset = floor($i) - 1;
@@ -297,6 +302,7 @@ class Todo
 				}
 			}
 		} else {
+
 			$select = [];
 			foreach($todos as $key => $todo) {
 				$select[] = ($key + 1) . '. ' . $todo['task'];
@@ -304,6 +310,7 @@ class Todo
 			$input = Message::radio('Select a task to delete', $select);
 			$response = $input->prompt();
 			array_splice($todos, intval(substr($response, 1)), 1);
+
 		}
 
 
