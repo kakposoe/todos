@@ -1,6 +1,5 @@
 <?php namespace Todo;
-
-use League\CLimate\CLimate;
+use Todo\Message;
 
 class Todo 
 {
@@ -21,7 +20,6 @@ class Todo
 
 	public static function find($i) {
 
-		$c = new CLImate;
 		$todos = self::getTodos();
 		$output = '';
 
@@ -33,34 +31,33 @@ class Todo
 			if (array_key_exists($index, $todos)) {
 				if (array_key_exists('subtasks', $todos[$index])) {
 					if(!array_key_exists(intval($offset), $todos[$index]['subtasks'])) {
-						$c->black()->backgroundRed()->out(' Oops! There is no task as this index ');
+						Message::error('Oops! There is no task as this index');
 						exit;
 					}
 				} else {
-					$c->black()->backgroundRed()->out(' Oops! There are no subtasks for #' . ($index + 1) . ' ');
+					Message::error('Oops! There are no subtasks for #' . ($index + 1));
 					exit;
 				}
 			} else {
-				$c->black()->backgroundRed()->out(' Oops! There is no top level task... ');
+				Message::error('Oops! There is no top level task...');
 				exit;
 			}
 
 			$todos[$offset]['subtasks'][$index]['status'] ? $output .= '<green>✓</green> ' : $output .= '- ';
 			$output .= $i . '. ';
 			$todos[intval($i) - 1]['status'] ? $output .= '<dim>' . $todos[$offset]['subtasks'][$index]['task'] . '</dim>' : $output .= $todos[intval($i) - 1]['task']; 
-			$c->out($output);
-
+			Message::output($output);
 		} else {
 
 			if(!array_key_exists(intval($i) - 1, $todos)) {
-				$c->black()->backgroundRed()->out(' Oops! There is no task as this index ');
+				Message::error('Oops! There is no task as this index');
 				exit;
 			}
 
 			$todos[intval($i) - 1]['status'] ? $output .= '<green>✓</green> ' : $output .= '- ';
 			$output .= $i . '. ';
 			$todos[intval($i) - 1]['status'] ? $output .= '<dim>' . $todos[intval($i) - 1]['task'] . '</dim>' : $output .= $todos[intval($i) - 1]['task']; 
-			$c->out($output);
+			Message::output($output);
 
 			if (isset($todos[intval($i) - 1]['subtasks'])) {
 				$output = '';
@@ -68,7 +65,7 @@ class Todo
 					$sub['status'] ? $output .= '<green>✓</green> ' : $output .= '- ';
 					$output .= ($key + 1) . '. ';
 					$sub['status'] ? $output .= '<dim>' . $sub['task'] . '</dim>' : $output .= $sub['task']; 
-					$c->tab()->out($output);
+					Message::output($output, true);
 					$output = '';
 				}
 			}
@@ -78,10 +75,9 @@ class Todo
 
 	public static function all() {
 
-		$c = new CLImate;
 		$todos = self::getTodos();
 
-		$c->br()->black()->backgroundCyan()->out(' To Do List! ')->br();
+		Message::intro();
 
 		if ($todos) {
 			$count = 1;
@@ -109,7 +105,7 @@ class Todo
 					$output .= ' [' . $completeCount . '/' . count($todo['subtasks']) . ']';
 				}
 
-				$c->out($output);
+				Message::output($output);
 
 				if (isset($todo['subtasks'])) {
 					$subCount = 1;
@@ -129,7 +125,7 @@ class Todo
 						$subout = $status . ' ' . $numb . $subNumb . ' ';
 						$sub['status'] ? $subout .= '<dim>' . $sub['task'] . '</dim>' : $subout .= $sub['task']; 
 
-						$c->tab()->out($subout);
+						Message::output($subout, true);
 						$subCount++;
 					}
 				}
@@ -137,14 +133,12 @@ class Todo
 				$count++;
 			}
 		} else {
-			$c->green(' ✓ All Tasks Completed. ');
-			$c->out(' Why not add a few tasks... ');
+			Message::success('✓ All Tasks Completed.');
+			Message::output('Why not add a few tasks...');
 		}
 	}
 
 	public static function add($task, $subtask = null) {
-
-		$c = new CLImate;
 
 		$todos = self::getTodos();
 
@@ -157,10 +151,10 @@ class Todo
 			$index = intval($subtask); 
 			$index--;
 			$todos[$index]['subtasks'][] = $data;
-			$c->black()->backgroundGreen()->out(' ✓ New Subtask Added ');
+			Message::success('✓ New Subtask Added');
 		} else {
 			$todos[] = $data;
-			$c->black()->backgroundGreen()->out(' ✓ New Task Added ');
+			Message::success('✓ New Task Added');
 		}
 
 		self::save($todos);
@@ -168,7 +162,6 @@ class Todo
 
 	public static function addMany($tasks) {
 
-		$c = new CLImate;
 		array_shift($tasks);
 
 		$first = false;
@@ -188,12 +181,10 @@ class Todo
 			}
 		}
 
-		$msg = ' ✓ ' . count($lister) . ' New Tasks Added ';
-
-		$c->br()->black()->backgroundGreen()->out($msg)->br();
+		Message::success('✓ ' . count($lister) . ' New Tasks Added', true);
 
 		foreach ($lister as $task) {
-			$c->out('- ' . $ref . '. ' .  $task);
+			Message::output('- ' . $ref . '. ' .  $task);
 			$ref++;
 		}
 
@@ -201,7 +192,6 @@ class Todo
 
 	public static function edit($i, $task) {
 
-		$c = new CLImate;
 		$todos = self::getTodos();
 
 		if (is_numeric($i)) {
@@ -215,11 +205,9 @@ class Todo
 			}
 
 			self::save($todos);
-			$c->black()->backgroundGreen()->out(' ✓ Task Updated ')->br();
-
+			Message::success('✓ Task Updated');
 		} else {
-
-			$c->black()->backgroundRed(' No tasks index declared ');
+			Message::error('No tasks index declared');
 
 		}
 
@@ -228,7 +216,6 @@ class Todo
 	public static function completed($i = null) {
 
 		$todos = self::getTodos();
-		$c = new CLImate;
 
 		if ((int) $i != $i) {
 			$offset = floor($i) - 1;
@@ -245,7 +232,7 @@ class Todo
 			}
 
 			if ($subDoneCount === $completeCount) {
-				$input = $c->black()->backgroundGreen()->confirm(' All Sub Tasks completed! Would you like to mark main task as completed? ');
+				$input = Message::warningConfirm('All Sub Tasks completed! Would you like to mark main task as completed?');
 				if ($input->confirmed()) {
 					$todos[$offset]['status'] = true;
 				} 
@@ -259,7 +246,7 @@ class Todo
 
 			// Check if has children
 			if(array_key_exists('subtasks', $todos[$i - 1])) {
-				$input = $c->black()->backgroundRed()->confirm(' There are sub tasks, mark all as completed? ');
+				$input = Message::warningConfirm('There are sub tasks, mark all as completed?');
 				if ($input->confirmed()) {
 					foreach ($todos[$i - 1]['subtasks'] as &$sub) {
 						$sub['status'] = true;
@@ -274,29 +261,23 @@ class Todo
 		}
 
 		self::save($todos);
-		$c->black()->backgroundGreen()->out(' Task marked as complete ')->br();
-
-		$c->out(' <green>✓</green> ' . $number . '. ' . $task);
-
+		Message::success('Task marked as complete');
+		Message::output('<green>✓</green> ' . $number . '. ' . $task);
 	}
 
 	public static function selectComplete($i = null) {
-
-		$c = new CLImate;
-		$c->black()->backgroundRed()->out(' Opps! You have not added an index to mark as completed ');
-		$c->comment(' e.g. todo done 1.1 ');
+		Message::error('Oops! You have not added an index to mark as completed');
+		Message::comment('e.g. todo done 1.1');
 	}
 
 	public static function remove($i = null) {
-
-		$c = new CLImate;
 		$todos = self::getTodos();
 
 		if($i) {
 			if ((int) $i != $i ) {
 				$offset = floor($i) - 1;
 				$index  = substr($i - $offset, 2) - 1;
-				$input  = $c->black()->backgroundRed()->confirm(' Confirm to Delete ');
+				$input  = Message::warningConfirm(' Confirm to Delete ');
 				if ($input->confirmed()) {
 					array_splice($todos[$offset]['subtasks'], $index, 1);
 				}
@@ -304,11 +285,11 @@ class Todo
 			} else {
 				// If has subtasks, ask if you would like to delete
 				if (count($todos[intval($i) - 1]['subtasks']) >= 1) {
-					$input  = $c->black()->backgroundRed()->confirm(' Task has subtasks! Would you like to delete all tasks? ');
+					$input  = Message::warningConfirm(' Task has subtasks! Would you like to delete all tasks? ');
 					if ($input->confirmed()) {
 						array_splice($todos, intval($i) - 1, 1);
 					} else {
-						$c->comment(' Task not removed...');
+						Message::comment('Task not removed...');
 						exit;
 					}
 				} else {
@@ -320,14 +301,13 @@ class Todo
 			foreach($todos as $key => $todo) {
 				$select[] = ($key + 1) . '. ' . $todo['task'];
 			}
-			$input = $c->radio('Select a task to delete', $select);
+			$input = Message::radio('Select a task to delete', $select);
 			$response = $input->prompt();
 			array_splice($todos, intval(substr($response, 1)), 1);
 		}
 
 
-		$c = new CLImate;
-		$c->br()->green('Task removed!')->br();
+		Message::success('Task removed!', true);
 		self::save($todos, true);
 	} 
 
