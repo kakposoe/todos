@@ -150,8 +150,15 @@ class Todo
 		if($subtask) {
 			$index = intval($subtask); 
 			$index--;
-			$todos[$index]['subtasks'][] = $data;
-			Message::success('✓ New Subtask Added');
+
+			if(!array_key_exists($index, $todos)) {
+				Message::error('Oops. There is not task at this index');
+				exit;
+			} else {
+				$todos[$index]['subtasks'][] = $data;
+				Message::success('✓ New Subtask Added');
+			}
+
 		} else {
 			$todos[] = $data;
 			Message::success('✓ New Task Added');

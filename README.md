@@ -84,7 +84,7 @@ ___
 - Check if indexes are numeric
 - Check functions to see if check if exists ??
 - Method to convert sublevel tasks to top level tasks
-- Add 'No More tasks' if all task have been completed
+- Add 'No More tasks' if all task have been completed within group of tasks
 - Multilevel child tasks
 - Deadline keys and visual representation of tasks past their deadline
 - Add High Priority Indicator
