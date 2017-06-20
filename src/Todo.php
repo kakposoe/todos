@@ -281,7 +281,18 @@ class Todo
 				}
 
 			} else {
-				array_splice($todos, intval($i) - 1, 1);
+				// If has subtasks, ask if you would like to delete
+				if (count($todos[intval($i) - 1]['subtasks']) >= 1) {
+					$input  = $c->black()->backgroundRed()->confirm(' Task has subtasks! Would you like to delete all tasks? ');
+					if ($input->confirmed()) {
+						array_splice($todos, intval($i) - 1, 1);
+					} else {
+						$c->comment(' Task not removed...');
+						exit;
+					}
+				} else {
+					array_splice($todos, intval($i) - 1, 1);
+				}
 			}
 		} else {
 			$select = [];
@@ -292,6 +303,7 @@ class Todo
 			$response = $input->prompt();
 			array_splice($todos, intval(substr($response, 1)), 1);
 		}
+
 
 		$c = new CLImate;
 		$c->br()->green('Task removed!')->br();
