@@ -4,7 +4,7 @@ use League\CLimate\CLimate;
 
 class Message
 {
-	
+
 	public static function intro() {
 		$c = new CLImate;
 		$c->br()->black()->backgroundCyan()->out(' To Do List! ')->br();
@@ -45,6 +45,13 @@ class Message
 	public static function warningConfirm($msg) {
 		$c = new CLImate;
 		return $c->black()->backgroundYellow()->confirm(' ' . $msg . ' ');
+	}
+
+	public static function check($i) {
+		if (!is_numeric($i)) {
+			return self::error('This is not a numeric value');
+			exit;
+		}
 	}
 
 }

@@ -80,14 +80,21 @@ You would then called todo using:
 
 ___
 
-## Things to work on
+## Version 1 (Things to work on for stable release)
 - Check if indexes are numeric
-- Check functions to see if check if exists ??
-- Method to convert sublevel tasks to top level tasks
+- Check functions to see if 'check if' exists ??
 - Add 'No More tasks' if all task have been completed within group of tasks
-- Multilevel child tasks
+- Chain removal of events e.g. <code>todo remove 2 and 3 and 4 and 5</code>
+- Chain completion of events e.g. <code>todo done 2 and 3 and 4 and 5</code>
+- Check if index exists when editing a task
+- Remove immediate string to task creation, replace with "add" or "task"
+
+## Version 2
+- Method to convert sublevel tasks to top level tasks
+- Complete tasks using menu select
 - Deadline keys and visual representation of tasks past their deadline
 - Add High Priority Indicator
 - List all tasks that are incomplete
-- Chain removal of events e.g. <code>todo remove 2 and 3 and 4 and 5</code>
-- Complete tasks using menu select
+- Multilevel child tasks
+- Group tasks into subtasks with new parent
+- Move tasks to be subtask of current parent
