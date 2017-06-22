@@ -40,8 +40,8 @@ if ( !$c->arguments->defined('help') &&
 		} elseif ($argv[1] === 'edit') {
 
 			if (empty($argv[2])) {
-				Message::error('No index given');
 				exit;
+				Message::error('No index given');
 			}
 
 			if (!is_numeric($argv[2])) {
