@@ -51,15 +51,16 @@ if ( !$c->arguments->defined('help') &&
 			!empty($argv[2]) ? Todo::remove($argv[2]) : Todo::remove();
 			exit;
 
-		} else {
-
+		} elseif (($argv[1] === 'add') || ($argv[1] === 'task')) {
 			if($c->arguments->defined('subtask')) {
-				Todo::add($argv[1], $c->arguments->get('subtask'));
-			} elseif(isset($argv[2]) && $argv[2] === 'and') {
+				Todo::add($argv[2], $c->arguments->get('subtask'));
+			} elseif(isset($argv[3]) && $argv[3] === 'and') {
 				Todo::addMany($argv);
 			} else {
-				Todo::add($argv[1]);
+				Todo::add($argv[2]);
 			}
+		} else {
+
 
 		}
 

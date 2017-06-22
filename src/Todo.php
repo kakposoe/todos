@@ -130,12 +130,12 @@ class Todo
 				$count++;
 			}
 		} else {
-			Message::success('✓ All Tasks Completed.');
-			Message::output('Why not add a few tasks...');
+			Message::comment('Currently No Tasks...');
+			Message::output('Add some tasks to your todo list!');
 		}
 	}
 
-	public static function add($task, $subtask = null) {
+	public static function add($task, $subtask = null, $showMessage = true) {
 
 		$todos = self::getTodos();
 
@@ -158,7 +158,8 @@ class Todo
 
 		} else {
 			$todos[] = $data;
-			Message::success('✓ New Task Added');
+			if ($showMessage) 
+				Message::success('✓ New Task Added');
 		}
 
 		self::save($todos);
@@ -166,14 +167,14 @@ class Todo
 
 	public static function addMany($tasks) {
 
-		array_shift($tasks);
+		$tasks = array_slice($tasks, 2);
 
 		$first = false;
 		$lister = [];
 
 		foreach ($tasks as $key => $value) {
 			if ($value !== 'and') {
-				self::add($value);
+				self::add($value, null, false);
 				$lister[] = $value;
 			}
 
