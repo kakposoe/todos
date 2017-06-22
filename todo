@@ -39,6 +39,16 @@ if ( !$c->arguments->defined('help') &&
 			}
 		} elseif ($argv[1] === 'edit') {
 
+			if (empty($argv[2])) {
+				Message::error('No index given');
+				exit;
+			}
+
+			if (!is_numeric($argv[2])) {
+				Message::error('\'' . $argv[2] . '\' is not a number');
+				exit;
+			}
+
 			Todo::edit($argv[2], $argv[3]);
 			exit;
 

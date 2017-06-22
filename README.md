@@ -73,8 +73,7 @@ via composer:
 ```bash
 composer global require kakposoe/todos
 ```
-
-manual installation
+manual installation:
 ```bash
 git clone http://github.com/kakposoe/todos 
 ```
@@ -90,7 +89,6 @@ ___
 - Check if indexes are numeric
 - Check functions to see if 'check if' exists ??
 - Add 'No More tasks' if all task have been completed within group of tasks
-- Check if index exists when editing a task
 
 ## Version 2
 - Chain removal of events e.g. <code>todo remove 2 and 3 and 4 and 5</code>
@@ -102,3 +100,4 @@ ___
 - Multilevel child tasks
 - Group tasks into subtasks with new parent
 - Move tasks to be subtask of current parent
+- Multiple to do lists within the same project
