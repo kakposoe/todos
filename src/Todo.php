@@ -18,6 +18,7 @@ class Todo
 	public static function find($i) {
 
 		$todos = self::getTodos();
+
 		$output = '';
 
 		if ((int) $i != $i) {

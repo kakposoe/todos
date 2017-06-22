@@ -49,8 +49,12 @@ if ( !$c->arguments->defined('help') &&
 				exit;
 			}
 
-			Todo::edit($argv[2], $argv[3]);
-			exit;
+			if (!empty($argv[3])) {
+				Todo::edit($argv[2], $argv[3]);
+				exit;
+			} else {
+				Message::error('There is no content to change the task to...');
+			}
 
 		} elseif ($argv[1] === 'done') {
 
