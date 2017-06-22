@@ -44,12 +44,20 @@ if ( !$c->arguments->defined('help') &&
 
 		} elseif ($argv[1] === 'done') {
 
-			!empty($argv[2]) ? Todo::completed($argv[2]) : Todo::selectComplete();
+			if(!empty($argv[2])) {
+				isset($argv[3]) && ($argv[3] === 'and' || is_numeric($argv[3])) ? Todo::completeMany($argv) : Todo::completed($argv[2]);
+			} else {
+				Message::error('Error!');
+			}
 			exit;
 
 		} elseif (($argv[1] === 'remove') || ($argv[1] === 'rm')) {
 
-			!empty($argv[2]) ? Todo::remove($argv[2]) : Todo::remove();
+			if(!empty($argv[2])) {
+				isset($argv[3]) && $argv[3] === 'and' ? Todo::removeMany($argv) : Todo::remove($argv[2]);
+			} else {
+				Todo::remove();
+			}
 			exit;
 
 		} elseif (($argv[1] === 'add') || ($argv[1] === 'task')) {

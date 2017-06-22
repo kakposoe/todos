@@ -270,6 +270,41 @@ class Todo
 		Message::output('<green>✓</green> ' . $number . '. ' . $task);
 	}
 
+	public static function completeMany($tasks) {
+
+		$todos = self::getTodos();
+		$tasks = array_slice($tasks, 2);
+
+		$count = 0;
+
+		foreach ($tasks as $key => $value) {
+
+			if ($value !== 'and') {
+				if (is_numeric($value)) {
+					
+					if ((int) $value != $value) {
+						$offset = floor($value) - 1;
+						$index  = substr($value - $offset, 2) - 1;
+						$todos[$offset]['subtasks'][$index]['status'] = true;
+						$count++;
+					} else {
+						$todos[intval($value) - 1]['status'] = true;
+						$count++;
+					}
+				} else {
+					Message::error('\'' . $value . '\'' . ' is an incorrect index');
+
+				}
+
+			}
+
+		}
+
+		self::save($todos);
+		Message::success('✓ '. $count .' tasks marked complete! ');
+
+	}
+
 	public static function selectComplete($i = null) {
 		Message::error('Oops! You have not added an index to mark as completed');
 		Message::comment('e.g. todo done 1.1');
@@ -294,7 +329,7 @@ class Todo
 
 			} else {
 				// If has subtasks, ask if you would like to delete
-				if (count($todos[intval($i) - 1]['subtasks']) >= 1) {
+				if (array_key_exists('subtasks', $todos[intval($i) - 1]) && count($todos[intval($i) - 1]['subtasks']) >= 1) {
 					$input  = Message::warningConfirm(' Task has subtasks! Would you like to delete all tasks? ');
 					if ($input->confirmed()) {
 						array_splice($todos, intval($i) - 1, 1);
@@ -321,6 +356,10 @@ class Todo
 
 		Message::success('Task removed!', true);
 		self::save($todos, true);
+	} 
+
+	public static function removeMany($tasks) {
+		Message::error('Function is not available');
 	} 
 
 }

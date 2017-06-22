@@ -10,13 +10,13 @@ Pretty much. Only difference is its completely on the command line.
 ## How does it work?
 Simply running ```todo init``` will create a todo.json file in your current working directory. You can then use the app to create new todo tasks like so:
 ```bash
-todo 'This is my new task'
+todo add 'This is my new task'
 ```
 
 ### You can add multiple tasks at once
 Just simply add 'and' after each todo  
 ```bash
-todo 'This' and 'That' and 'This'
+todo add 'This' and 'That' and 'This'
 ```
 
 You can even create sub tasks.  
@@ -40,6 +40,12 @@ todo 1
 todo done 1
 todo done 1.2
 todo -d 1.2
+```
+
+### You can even mark multiple tasks as complete (including subtasks)
+```bash
+todo done 1 and 1.1 and 2
+todo done 1 1.1 2
 ```
 
 ### Editing a task
@@ -84,11 +90,10 @@ ___
 - Check if indexes are numeric
 - Check functions to see if 'check if' exists ??
 - Add 'No More tasks' if all task have been completed within group of tasks
-- Chain removal of events e.g. <code>todo remove 2 and 3 and 4 and 5</code>
-- Chain completion of events e.g. <code>todo done 2 and 3 and 4 and 5</code>
 - Check if index exists when editing a task
 
 ## Version 2
+- Chain removal of events e.g. <code>todo remove 2 and 3 and 4 and 5</code>
 - Method to convert sublevel tasks to top level tasks
 - Complete tasks using menu select
 - Deadline keys and visual representation of tasks past their deadline
