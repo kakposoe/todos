@@ -3,6 +3,7 @@
 
 require __DIR__ . '/vendor/autoload.php';
 use Todo\Todo;
+use Todo\Message;
 
 $c = new League\CLImate\CLImate;
 
@@ -60,8 +61,7 @@ if ( !$c->arguments->defined('help') &&
 				Todo::add($argv[2]);
 			}
 		} else {
-
-
+			Message::error('Unknown action!');
 		}
 
 	} else {

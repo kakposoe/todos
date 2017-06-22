@@ -87,7 +87,6 @@ ___
 - Chain removal of events e.g. <code>todo remove 2 and 3 and 4 and 5</code>
 - Chain completion of events e.g. <code>todo done 2 and 3 and 4 and 5</code>
 - Check if index exists when editing a task
-- Remove immediate string to task creation, replace with "add" or "task"
 
 ## Version 2
 - Method to convert sublevel tasks to top level tasks
