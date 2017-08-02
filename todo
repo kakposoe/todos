@@ -6,6 +6,7 @@ use Todo\Todo;
 use Todo\Message;
 
 $c = new League\CLImate\CLImate;
+$version = '1.0';
 
 // Intro Text
 
@@ -17,6 +18,7 @@ if ( !$c->arguments->defined('help') &&
 	!$c->arguments->defined('remove') && 
 	!$c->arguments->defined('done') && 
 	!$c->arguments->defined('new') && 
+	!$c->arguments->defined('version') && 
 	!$c->arguments->defined('undo') ) 
 {
 
@@ -138,6 +140,13 @@ if($c->arguments->defined('done')) {
 // Remove
 if($c->arguments->defined('remove')) {
 	Todo::remove($c->arguments->get('remove'));
+}
+
+// Version
+if($c->arguments->defined('version')) {
+	$c->out('Todos Version ' . $version);
+	$c->out("<green>Author:</green> Kelvin Akposoe");
+	$c->out('<green>Author Url:</green> http://thisiskelv.in');
 }
 
 // Delete All

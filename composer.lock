@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "30293cebe5dcb3647e9d07f1cd3ad405",
-    "content-hash": "b128fd58e756bdf2ea27972326a0d703",
+    "content-hash": "09c57312208b315f0a41980f62d4057d",
     "packages": [
         {
             "name": "league/climate",
@@ -56,7 +55,7 @@
                 "php",
                 "terminal"
             ],
-            "time": "2016-04-04 20:24:59"
+            "time": "2016-04-04T20:24:59+00:00"
         },
         {
             "name": "seld/cli-prompt",
@@ -104,7 +103,7 @@
                 "input",
                 "prompt"
             ],
-            "time": "2017-03-18 11:32:45"
+            "time": "2017-03-18T11:32:45+00:00"
         }
     ],
     "packages-dev": [],

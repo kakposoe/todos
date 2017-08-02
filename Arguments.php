@@ -28,6 +28,11 @@
 			'longPrefix'  => 'remove',
 			'description' => 'Remove a task for your todo list',
 		],
+		'version' => [
+			'prefix'      => 'v',
+			'longPrefix'  => 'version',
+			'description' => 'Version of the app',
+		],
 		'flush' => [
 			'longPrefix'  => 'delete-all',
 			'description' => 'Delete All Entries',
