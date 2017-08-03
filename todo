@@ -14,90 +14,90 @@ $c->arguments->add( require_once(__DIR__ . '/arguments.php') );
 $c->arguments->parse();
 
 if ( !$c->arguments->defined('help') && 
-	!$c->arguments->defined('flush') && 
-	!$c->arguments->defined('remove') && 
-	!$c->arguments->defined('done') && 
-	!$c->arguments->defined('new') && 
-	!$c->arguments->defined('version') && 
-	!$c->arguments->defined('undo') ) 
+    !$c->arguments->defined('flush') && 
+    !$c->arguments->defined('remove') && 
+    !$c->arguments->defined('done') && 
+    !$c->arguments->defined('new') && 
+    !$c->arguments->defined('version') && 
+    !$c->arguments->defined('undo') ) 
 {
 
-	if (count($argv) > 1) { // If has any arguements
+    if (count($argv) > 1) { // If has any arguements
 
-		if (is_numeric($argv[1])) { // If init called, create file
-			Todo::find($argv[1]);
-			exit;
+        if (is_numeric($argv[1])) { // If init called, create file
+            Todo::find($argv[1]);
+            exit;
 
 
-		} elseif ($argv[1] === 'init') { // If init called, create file
-			
-			if (file_exists(getcwd() . '/todo.json')) {
-				$c->black()->backgroundRed()->out(' To-do list already in project ');
-				exit;
-			} else {
-				file_put_contents(getcwd() . '/todo.json', []);
-				$c->black()->backgroundGreen()->out(' New To-do list created in directory! ');
-				exit;
-			}
-		} elseif ($argv[1] === 'edit') {
+        } elseif ($argv[1] === 'init') { // If init called, create file
+            
+            if (file_exists(getcwd() . '/todo.json')) {
+                $c->black()->backgroundRed()->out(' To-do list already in project ');
+                exit;
+            } else {
+                file_put_contents(getcwd() . '/todo.json', []);
+                $c->black()->backgroundGreen()->out(' New To-do list created in directory! ');
+                exit;
+            }
+        } elseif ($argv[1] === 'edit') {
 
-			if (empty($argv[2])) {
-				exit;
-				Message::error('No index given');
-			}
+            if (empty($argv[2])) {
+                exit;
+                Message::error('No index given');
+            }
 
-			if (!is_numeric($argv[2])) {
-				Message::error('\'' . $argv[2] . '\' is not a number');
-				exit;
-			}
+            if (!is_numeric($argv[2])) {
+                Message::error('\'' . $argv[2] . '\' is not a number');
+                exit;
+            }
 
-			if (!empty($argv[3])) {
-				Todo::edit($argv[2], $argv[3]);
-				exit;
-			} else {
-				Message::error('There is no content to change the task to...');
-			}
+            if (!empty($argv[3])) {
+                Todo::edit($argv[2], $argv[3]);
+                exit;
+            } else {
+                Message::error('There is no content to change the task to...');
+            }
 
-		} elseif ($argv[1] === 'done') {
+        } elseif ($argv[1] === 'done') {
 
-			if(!empty($argv[2])) {
-				isset($argv[3]) && ($argv[3] === 'and' || is_numeric($argv[3])) ? Todo::completeMany($argv) : Todo::completed($argv[2]);
-			} else {
-				Message::error('Error!');
-			}
-			exit;
+            if(!empty($argv[2])) {
+                isset($argv[3]) && ($argv[3] === 'and' || is_numeric($argv[3])) ? Todo::completeMany($argv) : Todo::completed($argv[2]);
+            } else {
+                Message::error('Error!');
+            }
+            exit;
 
-		} elseif (($argv[1] === 'remove') || ($argv[1] === 'rm')) {
+        } elseif (($argv[1] === 'remove') || ($argv[1] === 'rm')) {
 
-			if(!empty($argv[2])) {
-				isset($argv[3]) && $argv[3] === 'and' ? Todo::removeMany($argv) : Todo::remove($argv[2]);
-			} else {
-				Todo::remove();
-			}
-			exit;
+            if(!empty($argv[2])) {
+                isset($argv[3]) && $argv[3] === 'and' ? Todo::removeMany($argv) : Todo::remove($argv[2]);
+            } else {
+                Todo::remove();
+            }
+            exit;
 
-		} elseif (($argv[1] === 'add') || ($argv[1] === 'task')) {
-			if($c->arguments->defined('subtask')) {
-				Todo::add($argv[2], $c->arguments->get('subtask'));
-			} elseif(isset($argv[3]) && $argv[3] === 'and') {
-				Todo::addMany($argv);
-			} else {
-				Todo::add($argv[2]);
-			}
-		} else {
-			Message::error('Unknown action!');
-		}
+        } elseif (($argv[1] === 'add') || ($argv[1] === 'task')) {
+            if($c->arguments->defined('subtask')) {
+                Todo::add($argv[2], $c->arguments->get('subtask'));
+            } elseif(isset($argv[3]) && $argv[3] === 'and') {
+                Todo::addMany($argv);
+            } else {
+                Todo::add($argv[2]);
+            }
+        } else {
+            Message::error('Unknown action!');
+        }
 
-	} else {
-		if (file_exists(getcwd() . '/todo.json')) { 
-			Todo::all();
-		} else {
-			$c->black()->backgroundRed()->out(' Oops! You haven\'t started a to do list ');
-			$c->comment(' Type \'todo init \' to begin... ');
-			exit;
-		}
-	}
-	
+    } else {
+        if (file_exists(getcwd() . '/todo.json')) { 
+            Todo::all();
+        } else {
+            $c->black()->backgroundRed()->out(' Oops! You haven\'t started a to do list ');
+            $c->comment(' Type \'todo init \' to begin... ');
+            exit;
+        }
+    }
+    
 } else {
 
 }
@@ -105,59 +105,59 @@ if ( !$c->arguments->defined('help') &&
 // Add New Task
 if($c->arguments->defined('new')) {
 
-	if($c->arguments->defined('subtask')) {
-		Todo::add($c->arguments->defined('new'), $c->arguments->get('subtask'));
-	} else {
-		Todo::add($c->arguments->defined('new'));
-	}
+    if($c->arguments->defined('subtask')) {
+        Todo::add($c->arguments->defined('new'), $c->arguments->get('subtask'));
+    } else {
+        Todo::add($c->arguments->defined('new'));
+    }
 }
 
 // Undo
 if($c->arguments->defined('undo')) {
 
-	$i = $c->arguments->get('undo');
+    $i = $c->arguments->get('undo');
 
-	if ((int) $i != $i ) {
-		$offset = floor($i) - 1;
-		$index = substr($i - $offset, 2) - 1;
-		$todos[$offset]['subtasks'][$index]['status'] = false;
-	} else {
-		$i = intval($i);
-		$todos[$i - 1]['status'] = false;
-	}
+    if ((int) $i != $i ) {
+        $offset = floor($i) - 1;
+        $index = substr($i - $offset, 2) - 1;
+        $todos[$offset]['subtasks'][$index]['status'] = false;
+    } else {
+        $i = intval($i);
+        $todos[$i - 1]['status'] = false;
+    }
 
-	file_put_contents('./todo.json', json_encode($todos));
-	$c->comment('Success: Task now unchecked');
-	tasks($todos, $c);
+    file_put_contents('./todo.json', json_encode($todos));
+    $c->comment('Success: Task now unchecked');
+    tasks($todos, $c);
 
 }
 
 // Change status to done
 if($c->arguments->defined('done')) {
-	Todo::completed($c->arguments->get('done'));
+    Todo::completed($c->arguments->get('done'));
 }
 
 // Remove
 if($c->arguments->defined('remove')) {
-	Todo::remove($c->arguments->get('remove'));
+    Todo::remove($c->arguments->get('remove'));
 }
 
 // Version
 if($c->arguments->defined('version')) {
-	$c->out('Todos Version ' . $version);
-	$c->out("<green>Author:</green> Kelvin Akposoe");
-	$c->out('<green>Author Url:</green> http://thisiskelv.in');
+    $c->out('Todos Version ' . $version);
+    $c->out("<green>Author:</green> Kelvin Akposoe");
+    $c->out('<green>Author Url:</green> http://thisiskelv.in');
 }
 
 // Delete All
 if($c->arguments->defined('flush')) {
 
-	$input = $c->black()->backgroundRed()->confirm(' Are you sure you want to delete all ');
+    $input = $c->black()->backgroundRed()->confirm(' Are you sure you want to delete all ');
 
-	if ($input->confirmed()) {
-		file_put_contents('./todo.json', []);
-		$c->black()->backgroundGreen(' All Tasks Deleted ');
-	}
+    if ($input->confirmed()) {
+        file_put_contents('./todo.json', []);
+        $c->black()->backgroundGreen(' All Tasks Deleted ');
+    }
 }
 
 // Help
