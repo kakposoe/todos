@@ -84,11 +84,8 @@ You would then called todo using:
 ```
 
 ___
-
 ## Version 1 (Things to work on for stable release)
-- Check if indexes are numeric
-- Check functions to see if 'check if' exists ??
-- Add 'No More tasks' if all task have been completed within group of tasks
+- Add 'No More tasks'. Checks if all task have been completed within task list
 
 ## Version 2
 - Chain removal of events e.g. <code>todo remove 2 and 3 and 4 and 5</code>
@@ -101,3 +98,4 @@ ___
 - Group tasks into subtasks with new parent
 - Move tasks to be subtask of current parent
 - Multiple to do lists within the same project
+- Add 'clear' action, similar to delete-all but will only remove what has not been completed
