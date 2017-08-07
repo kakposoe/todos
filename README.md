@@ -83,11 +83,9 @@ You would then called todo using:
 ./todo 'This is an example task'
 ```
 
-___
-## Version 1 (Things to work on for stable release)
+## Things to work on
 - Add 'No More tasks'. Checks if all task have been completed within task list
-
-## Version 2
+- Reorder items e.g. <code>todo reorder 2 4</code> which will swap the index positions of 2 items
 - Chain removal of events e.g. <code>todo remove 2 and 3 and 4 and 5</code>
 - Method to convert sublevel tasks to top level tasks
 - Complete tasks using menu select
